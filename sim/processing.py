@@ -1,9 +1,9 @@
+import discord
 import random as rd
 import copy
 from collections import defaultdict
 
 from sim.utils import format_stats, add_dicts, rescale_dict
-
 
 class BaseSim:
     def compute_winner(self, winner):
@@ -22,11 +22,10 @@ class BaseSim:
             print('{}{} : {}'.format(u.str_id, ' ' * (len_max - len(u.str_id)),
                                      self.stats[stat][u.str_id]))
 
-    def print_winrate(self):
-        print('Attacker winrate : {}%'.format(100 * self.wins_1 / self.n_sim))
-        print('Defender winrate : {}%'.format(100 * (self.wins_2 + self.ties) / self.n_sim))
-        print('Including wins by tie : {}%'.format(100 * self.ties / self.n_sim))
-
+    async def print_winrate(self, client, message):                 
+        await client.send_message(message.channel, 'Attacker winrate : {}%'.format(100 * self.wins_1 / self.n_sim))        
+        await client.send_message(message.channel, 'Defender winrate : {}%'.format(100 * (self.wins_2 + self.ties) / self.n_sim))
+        await client.send_message(message.channel, 'Including wins by tie : {}%'.format(100 * self.ties / self.n_sim))      
 
 class GameSim(BaseSim):
     def __init__(self, attack_team, defense_team, n_sim=1000, max_turns=15):
