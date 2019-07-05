@@ -30,12 +30,7 @@ async def on_message(message):
         print(teamArray)
 
         #Builds array for battle, needs to pull values from chat message
-        team_1 = Team([getattr(Hero, teamArray[1]),
-               Hero.valkyrie(),
-               Hero.lindberg(),
-               Hero.shudde_m_ell(),
-               Hero.drow(),
-               Hero.freya()])
+        team_1 = Team([getattr(Hero, hero_string) for hero_string in teamArray])
 
         team_2 = Team([Hero.ultima(),
                Hero.valkyrie(),
