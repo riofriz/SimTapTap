@@ -10,20 +10,6 @@ from sim.tests import friend_boss_test, main_friend_boss_test, master_friend_bos
 heroes = [Hero.__dict__[key] for key in Hero.__dict__ if '__' not in key and 'empty' not in key]
 
 # Create teams
-team_1 = Team([Hero.ultima(),
-   	       Hero.lindberg(),
-	       Hero.martin(),
-	       Hero.shudde_m_ell(),
-               Hero.drow(),
-               Hero.freya()])
-
-
-team_2 = Team([Hero.ultima(),
-	       Hero.valkyrie(),
-	       Hero.lindberg(),
-               Hero.shudde_m_ell(),
-               Hero.drow(),
-               Hero.freya()])
 
 TOKEN = 'xxxxx'
 
@@ -36,11 +22,34 @@ async def on_message(message):
     if message.author == client.user:
         return
 
-    if message.content.startswith('!sym'):              
-        # Do simulations
-        print(client.user.name)        
+    if message.content.startswith('!sym'):                      
+
+        #Breaks the chat message into an array (with !sym as first value, that's easily solvable so i'll sort later)
+        teamArray = message.content.split()  
+
+        print(teamArray)
+
+        #Builds array for battle, needs to pull values from chat message
+        team_1 = Team([getattr(Hero, teamArray[1]),
+               Hero.valkyrie(),
+               Hero.lindberg(),
+               Hero.shudde_m_ell(),
+               Hero.drow(),
+               Hero.freya()])
+
+        team_2 = Team([Hero.ultima(),
+               Hero.valkyrie(),
+               Hero.lindberg(),
+               Hero.shudde_m_ell(),
+               Hero.drow(),
+               Hero.freya()])
+
+      
         sim = GameSim(team_1, team_2, n_sim=100)
-        sim.process()        
+        #Runs simulation
+        sim.process()   
+
+        #Sends results in the chat where request was made      
         await client.send_message(message.channel, '**TEAM #1**')
         await client.send_message(message.channel, team_1.comp())        
         await client.send_message(message.channel, '**TEAM #2**')
