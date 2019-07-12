@@ -11,7 +11,7 @@ heroes = [Hero.__dict__[key] for key in Hero.__dict__ if '__' not in key and 'em
 
 # Create teams
 
-TOKEN = 'NTk2MzM2NTkyODc3MTI1NjMz.XR4DyQ._4cK7auADVooRgyMgVkrjS4wf_E'
+TOKEN = 'xxx'
 
 client = discord.Client()
 
